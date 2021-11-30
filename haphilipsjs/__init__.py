@@ -41,7 +41,7 @@ from httpcore import AsyncConnectionPool
 
 LOG = logging.getLogger(__name__)
 TIMEOUT = 20.0
-TIMEOUT_CONNECT = 5.0
+TIMEOUT_CONNECT = 10.0
 TIMEOUT_NOTIFYREAD = 130
 DEFAULT_API_VERSION = 1
 
@@ -273,7 +273,7 @@ class PhilipsTV(object):
             self.protocol = "http"
 
         timeout = httpx.Timeout(timeout=TIMEOUT, connect=TIMEOUT_CONNECT)
-        limits = httpx.Limits(max_keepalive_connections=0, max_connections=3)
+        limits = httpx.Limits(max_keepalive_connections=3, max_connections=5)
         self.session = httpx.AsyncClient(limits=limits, timeout=timeout, verify=False)
         self.session.headers["Accept"] = "application/json"
 
